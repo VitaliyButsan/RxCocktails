@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E87DC07D9B9CCA1A76DF05E5 /* Pods_RxCocktails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F987C57EF3FF0B2737989FB1 /* Pods_RxCocktails.framework */; };
+		FE7B5520267922A200F2048E /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B551F267922A200F2048E /* Moya.swift */; };
+		FE7B55232679236200F2048E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B55222679236200F2048E /* Category.swift */; };
+		FE7B5526267923A600F2048E /* Cocktail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B5525267923A600F2048E /* Cocktail.swift */; };
+		FE7B55292679246200F2048E /* CocktailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B55282679246200F2048E /* CocktailsViewModel.swift */; };
+		FE7B55342679306000F2048E /* CocktailsNetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B55332679306000F2048E /* CocktailsNetManager.swift */; };
 		FE92CB8E2679165200520461 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE92CB8D2679165200520461 /* AppDelegate.swift */; };
-		FE92CB902679165200520461 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE92CB8F2679165200520461 /* SceneDelegate.swift */; };
-		FE92CB922679165200520461 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE92CB912679165200520461 /* ViewController.swift */; };
+		FE92CB922679165200520461 /* CocktailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE92CB912679165200520461 /* CocktailsViewController.swift */; };
 		FE92CB972679165400520461 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE92CB962679165400520461 /* Assets.xcassets */; };
 		FE92CB9A2679165400520461 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE92CB982679165400520461 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -19,10 +23,14 @@
 		5AF98921285BA53BE2232688 /* Pods-RxCocktails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCocktails.debug.xcconfig"; path = "Target Support Files/Pods-RxCocktails/Pods-RxCocktails.debug.xcconfig"; sourceTree = "<group>"; };
 		EF16A930D2DDE7BFE68091EE /* Pods-RxCocktails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCocktails.release.xcconfig"; path = "Target Support Files/Pods-RxCocktails/Pods-RxCocktails.release.xcconfig"; sourceTree = "<group>"; };
 		F987C57EF3FF0B2737989FB1 /* Pods_RxCocktails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxCocktails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE7B551F267922A200F2048E /* Moya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moya.swift; sourceTree = "<group>"; };
+		FE7B55222679236200F2048E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		FE7B5525267923A600F2048E /* Cocktail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cocktail.swift; sourceTree = "<group>"; };
+		FE7B55282679246200F2048E /* CocktailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsViewModel.swift; sourceTree = "<group>"; };
+		FE7B55332679306000F2048E /* CocktailsNetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsNetManager.swift; sourceTree = "<group>"; };
 		FE92CB8A2679165200520461 /* RxCocktails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxCocktails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE92CB8D2679165200520461 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FE92CB8F2679165200520461 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FE92CB912679165200520461 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FE92CB912679165200520461 /* CocktailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsViewController.swift; sourceTree = "<group>"; };
 		FE92CB962679165400520461 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE92CB992679165400520461 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FE92CB9B2679165400520461 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +63,15 @@
 				EF16A930D2DDE7BFE68091EE /* Pods-RxCocktails.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FE7B551E2679228400F2048E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				FE7B551F267922A200F2048E /* Moya.swift */,
+				FE7B55332679306000F2048E /* CocktailsNetManager.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		FE92CB812679165200520461 = {
@@ -91,6 +108,7 @@
 				FED28DB826791D5600C3C319 /* Model */,
 				FED28DB926791D5B00C3C319 /* View */,
 				FED28DBA26791D5F00C3C319 /* ViewModel */,
+				FE7B551E2679228400F2048E /* API */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -98,6 +116,8 @@
 		FED28DB826791D5600C3C319 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FE7B55222679236200F2048E /* Category.swift */,
+				FE7B5525267923A600F2048E /* Cocktail.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -106,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				FED28DBE26791DAB00C3C319 /* Storyboards */,
-				FE92CB912679165200520461 /* ViewController.swift */,
+				FE92CB912679165200520461 /* CocktailsViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -114,6 +134,7 @@
 		FED28DBA26791D5F00C3C319 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				FE7B55282679246200F2048E /* CocktailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -122,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				FE92CB8D2679165200520461 /* AppDelegate.swift */,
-				FE92CB8F2679165200520461 /* SceneDelegate.swift */,
 				FE92CB9B2679165400520461 /* Info.plist */,
 			);
 			path = "Supporting files";
@@ -261,9 +281,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE92CB922679165200520461 /* ViewController.swift in Sources */,
+				FE92CB922679165200520461 /* CocktailsViewController.swift in Sources */,
+				FE7B55232679236200F2048E /* Category.swift in Sources */,
 				FE92CB8E2679165200520461 /* AppDelegate.swift in Sources */,
-				FE92CB902679165200520461 /* SceneDelegate.swift in Sources */,
+				FE7B55342679306000F2048E /* CocktailsNetManager.swift in Sources */,
+				FE7B55292679246200F2048E /* CocktailsViewModel.swift in Sources */,
+				FE7B5520267922A200F2048E /* Moya.swift in Sources */,
+				FE7B5526267923A600F2048E /* Cocktail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -387,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -406,6 +430,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 45JNFF5WM9;
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocktails/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -426,6 +451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 45JNFF5WM9;
 				INFOPLIST_FILE = "$(SRCROOT)/RxCocktails/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -7,9 +7,10 @@ target 'RxCocktails' do
 
   # Pods for RxCocktails
 
-  pod 'RxSwift', '6.2.0'
-  pod 'RxCocoa', '6.2.0'
-  pod 'Moya', '~> 14.0'
+  pod 'RxSwift', '5.0.0'
+  pod 'RxCocoa', '5.0.0'
+  pod 'Moya/RxSwift', '~> 14.0'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'MBProgressHUD', '~> 1.2.0'
 
 end

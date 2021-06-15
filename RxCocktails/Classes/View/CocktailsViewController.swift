@@ -7,11 +7,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CocktailsViewController: UIViewController {
 
+    let viewModel = CocktailsViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .orange
+        
+        viewModel.getCategories()
         // Do any additional setup after loading the view.
     }
 }
-
