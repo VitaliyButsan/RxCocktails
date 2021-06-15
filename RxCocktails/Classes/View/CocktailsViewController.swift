@@ -15,7 +15,7 @@ class CocktailsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .orange
         
-        viewModel.getCategories()
+        viewModel.getData()
         // Do any additional setup after loading the view.
     }
 }

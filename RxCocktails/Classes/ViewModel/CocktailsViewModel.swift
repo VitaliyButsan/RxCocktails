@@ -6,9 +6,13 @@
 //
 
 import RxSwift
+import RxCocoa
+import RxDataSources
 import Moya
 
 class CocktailsViewModel {
+    
+    private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     
     private var categories: [Category] = []
     private var cocktailsWithCategories: [Category : [Cocktail]] = [:]
@@ -16,7 +20,11 @@ class CocktailsViewModel {
     private let netManager = CocktailsNetManager.instance
     private let bag = DisposeBag()
     
-    func getCategories() {
+    func getData() {
+        getCategories()
+    }
+    
+    private func getCategories() {
         netManager.getCategories().subscribe { [weak self] event in
             switch event {
             case .success(let categories):
@@ -30,15 +38,14 @@ class CocktailsViewModel {
     }
     
     private func getCocktails(by categories: [Category]) {
-        var result: [Category:[Cocktail]] = [:]
         let group = DispatchGroup()
         
         for category in categories {
             group.enter()
-            netManager.getCocktails(by: category).subscribe { event in
+            netManager.getCocktails(by: category).subscribe { [weak self] event in
                 switch event {
                 case .success(let cocktails):
-                    result[category] = cocktails
+                    self?.cocktailsWithCategories[category] = cocktails
                     group.leave()
                 case .error(let error):
                     print(error)
@@ -48,7 +55,18 @@ class CocktailsViewModel {
         }
         
         group.notify(queue: DispatchQueue.main) {
-            result.forEach { print("-->", $0.key.name) }
+            self.createSections(by: categories)
         }
+    }
+    
+    func createSections(by categories: [Category]) {
+        var models: [SectionModel<Category, Cocktail>] = []
+        
+        for category in categories {
+            guard let cocktails = cocktailsWithCategories[category] else { return }
+            let model = SectionModel(model: category, items: cocktails)
+            models.append(model)
+        }
+        sections.accept(models)
     }
 }

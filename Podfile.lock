@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.3)
+  - Differentiator (4.0.1)
   - MBProgressHUD (1.2.0)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
@@ -9,6 +10,10 @@ PODS:
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
@@ -18,28 +23,33 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.2.0)
   - Moya/RxSwift (~> 14.0)
   - RxCocoa (= 5.0.0)
+  - RxDataSources (~> 4.0)
   - RxSwift (= 5.0.0)
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Differentiator
     - MBProgressHUD
     - Moya
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 6e50816b5e279406c020c6f3f40edca190335652
+PODFILE CHECKSUM: 420676f03c86cfc14668d3c3ba843b9840dd2c28
 
 COCOAPODS: 1.10.1

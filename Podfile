@@ -9,6 +9,7 @@ target 'RxCocktails' do
 
   pod 'RxSwift', '5.0.0'
   pod 'RxCocoa', '5.0.0'
+  pod 'RxDataSources', '~> 4.0'
   pod 'Moya/RxSwift', '~> 14.0'
   pod 'SnapKit', '~> 5.0.0'
   pod 'MBProgressHUD', '~> 1.2.0'
