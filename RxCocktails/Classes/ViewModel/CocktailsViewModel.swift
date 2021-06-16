@@ -13,23 +13,21 @@ import Moya
 class CocktailsViewModel {
     
     private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
+    private(set) var isLoaded = BehaviorRelay(value: false)
+    private(set) var hasFilters = BehaviorRelay(value: false)
+    private(set) var noMoreCocktails = BehaviorRelay(value: false)
     
     private var categories: [Category] = []
-    private var cocktailsWithCategories: [Category : [Cocktail]] = [:]
     
     private let netManager = CocktailsNetManager.instance
     private let bag = DisposeBag()
     
     func getData() {
-        getCategories()
-    }
-    
-    private func getCategories() {
         netManager.getCategories().subscribe { [weak self] event in
             switch event {
             case .success(let categories):
                 self?.categories = categories
-                self?.getCocktails(by: categories)
+                self?.getMoreCocktails()
             case .error(let error):
                 print(error)
             }
@@ -37,36 +35,45 @@ class CocktailsViewModel {
         .disposed(by: bag)
     }
     
-    private func getCocktails(by categories: [Category]) {
-        let group = DispatchGroup()
-        
+    func getMoreCocktails() {
         for category in categories {
-            group.enter()
-            netManager.getCocktails(by: category).subscribe { [weak self] event in
-                switch event {
-                case .success(let cocktails):
-                    self?.cocktailsWithCategories[category] = cocktails
-                    group.leave()
-                case .error(let error):
-                    print(error)
+            if !sections.value.contains(where: { $0.model == category }) {
+                isLoaded.accept(false)
+                getCocktails(by: category)
+                break
+            } else {
+                if category == categories.last, noMoreCocktails.value == false {
+                    noMoreCocktails.accept(true)
                 }
             }
-            .disposed(by: bag)
-        }
-        
-        group.notify(queue: DispatchQueue.main) {
-            self.createSections(by: categories)
         }
     }
     
-    func createSections(by categories: [Category]) {
-        var models: [SectionModel<Category, Cocktail>] = []
-        
-        for category in categories {
-            guard let cocktails = cocktailsWithCategories[category] else { return }
-            let model = SectionModel(model: category, items: cocktails)
-            models.append(model)
+    private func getCocktails(by category: Category) {
+        netManager.getCocktails(by: category).subscribe { [weak self] event in
+            switch event {
+            case .success(let cocktails):
+                self?.save(cocktails, by: category)
+                self?.isLoaded.accept(true)
+            case .error(let error):
+                print(error)
+            }
         }
-        sections.accept(models)
+        .disposed(by: bag)
+    }
+    
+    private func save(_ cocktails: [Cocktail], by category: Category) {
+        var sections = self.sections.value
+        let section = SectionModel(model: category, items: cocktails)
+        sections.append(section)
+        self.sections.accept(sections)
+    }
+    
+    func setSelected(category: Category) {
+        var sections = self.sections.value
+        guard let sectionIndex = self.sections.value.firstIndex(where: { $0.model == category }) else { return }
+        sections[sectionIndex].model.isSelected?.toggle()
+        hasFilters.accept(sections.contains(where: {$0.model.isSelected == true}))
+        self.sections.accept(sections)
     }
 }

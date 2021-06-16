@@ -13,8 +13,10 @@ struct CategoriesWrapper: Decodable {
 
 struct Category: Decodable, Hashable {
     let name: String
+    var isSelected: Bool? = false
     
     enum CodingKeys: String, CodingKey {
         case name = "strCategory"
     }
 }
+
