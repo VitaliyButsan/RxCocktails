@@ -68,7 +68,7 @@ class CocktailsViewController: UIViewController {
         navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc func goToFilters() {
+    @objc private func goToFilters() {
         let filtersVC = FiltersViewController(viewModel: viewModel)
         navigationController?.pushViewController(filtersVC, animated: true)
     }

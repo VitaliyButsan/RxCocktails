@@ -16,6 +16,8 @@ class FiltersViewController: UIViewController {
     
     private let bag = DisposeBag()
     
+    private var isButtonHighlighted = false
+    
     init(viewModel: CocktailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -33,24 +35,50 @@ class FiltersViewController: UIViewController {
         return tableView
     }()
     
+    var applyFiltersButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Apply Filters", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.layer.borderWidth = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        //getData()
     }
     
     private func setup() {
+        viewModel.setupSections()
         setupLayout()
         //setupNavBar()
-        //setupObservers()
+        setupObservers()
         bindUI()
     }
     
     private func setupLayout() {
-        view.addSubview(tableView)
+        [tableView,
+         applyFiltersButton].forEach { view.addSubview($0) }
+        
         tableView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalTo(self.view)
         }
+        
+        applyFiltersButton.snp.makeConstraints { make in
+            make.leading.equalTo(self.view.snp.leading).inset(16)
+            make.trailing.equalTo(self.view.snp.trailing).inset(16)
+            make.bottom.equalTo(self.view.snp.bottom).inset(16 * 2)
+            make.height.equalTo(50)
+        }
+    }
+    
+    private func setupObservers() {
+        applyFiltersButton.rx.tap
+            .bind(to: viewModel.applyFiltersSbj)
+            .disposed(by: bag)
     }
     
     private func bindUI() {
@@ -69,12 +97,11 @@ class FiltersViewController: UIViewController {
             })
             .disposed(by: bag)
         
-        /*tableView.rx.itemSelected
+        tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 let cell = self?.tableView.cellForRow(at: indexPath) as? FilterCell
-                //cell?.checkmark.isHidden.toggle()
-                //viewModel.setSelected(category: <#T##Category#>)
+                cell?.checkmark.isHidden.toggle()
             })
-            .disposed(by: bag)*/
+            .disposed(by: bag)
     }
 }
