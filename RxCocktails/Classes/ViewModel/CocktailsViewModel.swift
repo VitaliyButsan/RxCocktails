@@ -80,8 +80,8 @@ class CocktailsViewModel {
     }
     
     private func save(_ cocktails: [Cocktail], by category: Category) {
-        let section = SectionModel(model: category, items: cocktails)
-        sections.accept(sections.value + [section])
+        let newSection = SectionModel(model: category, items: cocktails)
+        sections.accept(sections.value + [newSection])
         filters.accept(sections.value)
     }
     

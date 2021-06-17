@@ -112,12 +112,12 @@ class CocktailsViewController: UIViewController {
         navigationController?.pushViewController(filtersVC, animated: true)
     }
     
-    func showAlert(hideAfret: Int) {
+    private func showAlert(hideAfter: Int) {
         let alertController = UIAlertController(title: "No More Cocktails!", message: "", preferredStyle: .alert)
         DispatchQueue.main.async {
             self.present(alertController, animated: true)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(hideAfret)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(hideAfter)) {
             alertController.dismiss(animated: true)
         }
     }
@@ -128,7 +128,7 @@ class CocktailsViewController: UIViewController {
             .subscribe(onNext: { noMore in
                 if noMore {
                     self.removeFooterSpinner()
-                    self.showAlert(hideAfret: 2)
+                    self.showAlert(hideAfter: 2)
                 }
             })
             .disposed(by: bag)

@@ -67,9 +67,7 @@ class FiltersViewController: UIViewController {
         }
         
         applyFiltersButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading).inset(Constants.defaultPadding * 2)
-            make.trailing.equalTo(view.snp.trailing).inset(Constants.defaultPadding * 2)
-            make.bottom.equalTo(view.snp.bottom).inset(Constants.defaultPadding * 2)
+            make.leading.trailing.bottom.equalTo(view).inset(Constants.defaultPadding * 2)
             make.height.equalTo(50)
         }
     }
