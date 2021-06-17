@@ -12,9 +12,9 @@ class CocktailsNetManager {
     
     static let instance = CocktailsNetManager()
     
-    private let provider = MoyaProvider<CocktailsService>()
-    
     private init() { }
+    
+    private let provider = MoyaProvider<CocktailsService>()
     
     func getCategories() -> Single<[Category]> {
         provider.rx

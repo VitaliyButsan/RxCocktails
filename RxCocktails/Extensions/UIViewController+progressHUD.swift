@@ -14,7 +14,7 @@ extension UIViewController {
         MBProgressHUD.hide(for: self.view, animated: true)
     }
     
-    func showHUD(_ message: String) {
+    func showHUD(_ message: String = "") {
         let progressHUD: MBProgressHUD
         progressHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         progressHUD.label.text = message

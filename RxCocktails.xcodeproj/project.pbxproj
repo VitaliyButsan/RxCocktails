@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E87DC07D9B9CCA1A76DF05E5 /* Pods_RxCocktails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F987C57EF3FF0B2737989FB1 /* Pods_RxCocktails.framework */; };
+		FE3B5B24267B25790069C041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3B5B23267B25790069C041 /* Constants.swift */; };
+		FE3B5B33267B326B0069C041 /* CocktailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3B5B32267B326B0069C041 /* CocktailCell.swift */; };
+		FE3B5B63267B6C120069C041 /* UIScreen+fullWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3B5B62267B6C120069C041 /* UIScreen+fullWidth.swift */; };
 		FE4C96CB267A1863008D1AE3 /* UITableView+lastIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C96CA267A1863008D1AE3 /* UITableView+lastIndexPath.swift */; };
 		FE4C96CE267A3093008D1AE3 /* UIViewController+progressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C96CD267A3093008D1AE3 /* UIViewController+progressHUD.swift */; };
 		FE4C96D1267A47F4008D1AE3 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C96D0267A47F4008D1AE3 /* FiltersViewController.swift */; };
@@ -27,6 +30,9 @@
 		5AF98921285BA53BE2232688 /* Pods-RxCocktails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCocktails.debug.xcconfig"; path = "Target Support Files/Pods-RxCocktails/Pods-RxCocktails.debug.xcconfig"; sourceTree = "<group>"; };
 		EF16A930D2DDE7BFE68091EE /* Pods-RxCocktails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCocktails.release.xcconfig"; path = "Target Support Files/Pods-RxCocktails/Pods-RxCocktails.release.xcconfig"; sourceTree = "<group>"; };
 		F987C57EF3FF0B2737989FB1 /* Pods_RxCocktails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxCocktails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE3B5B23267B25790069C041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FE3B5B32267B326B0069C041 /* CocktailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCell.swift; sourceTree = "<group>"; };
+		FE3B5B62267B6C120069C041 /* UIScreen+fullWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+fullWidth.swift"; sourceTree = "<group>"; };
 		FE4C96CA267A1863008D1AE3 /* UITableView+lastIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+lastIndexPath.swift"; sourceTree = "<group>"; };
 		FE4C96CD267A3093008D1AE3 /* UIViewController+progressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+progressHUD.swift"; sourceTree = "<group>"; };
 		FE4C96D0267A47F4008D1AE3 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
@@ -73,11 +79,20 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FE3B5B22267B25540069C041 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				FE3B5B23267B25790069C041 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		FE4C96C9267A1841008D1AE3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				FE4C96CA267A1863008D1AE3 /* UITableView+lastIndexPath.swift */,
 				FE4C96CD267A3093008D1AE3 /* UIViewController+progressHUD.swift */,
+				FE3B5B62267B6C120069C041 /* UIScreen+fullWidth.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -86,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				FE4C96D4267A4F55008D1AE3 /* FilterCell.swift */,
+				FE3B5B32267B326B0069C041 /* CocktailCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -121,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				FED28DB726791D4F00C3C319 /* Classes */,
+				FE3B5B22267B25540069C041 /* Constants */,
 				FE4C96C9267A1841008D1AE3 /* Extensions */,
 				FED28DBD26791D9200C3C319 /* Resources */,
 				FED28DBC26791D7D00C3C319 /* Supporting files */,
@@ -153,8 +170,8 @@
 			children = (
 				FE4C96D3267A4F47008D1AE3 /* Cells */,
 				FE92CB912679165200520461 /* CocktailsViewController.swift */,
-				FED28DBE26791DAB00C3C319 /* Storyboards */,
 				FE4C96D0267A47F4008D1AE3 /* FiltersViewController.swift */,
+				FED28DBE26791DAB00C3C319 /* Storyboards */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -309,17 +326,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE3B5B33267B326B0069C041 /* CocktailCell.swift in Sources */,
 				FE92CB922679165200520461 /* CocktailsViewController.swift in Sources */,
 				FE7B55232679236200F2048E /* Category.swift in Sources */,
 				FE4C96D5267A4F55008D1AE3 /* FilterCell.swift in Sources */,
 				FE92CB8E2679165200520461 /* AppDelegate.swift in Sources */,
 				FE7B55342679306000F2048E /* CocktailsNetManager.swift in Sources */,
 				FE4C96D1267A47F4008D1AE3 /* FiltersViewController.swift in Sources */,
+				FE3B5B63267B6C120069C041 /* UIScreen+fullWidth.swift in Sources */,
 				FE7B55292679246200F2048E /* CocktailsViewModel.swift in Sources */,
 				FE7B5520267922A200F2048E /* Moya.swift in Sources */,
 				FE7B5526267923A600F2048E /* Cocktail.swift in Sources */,
 				FE4C96CE267A3093008D1AE3 /* UIViewController+progressHUD.swift in Sources */,
 				FE4C96CB267A1863008D1AE3 /* UITableView+lastIndexPath.swift in Sources */,
+				FE3B5B24267B25790069C041 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

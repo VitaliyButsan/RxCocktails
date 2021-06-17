@@ -5,15 +5,13 @@
 //  Created by Butsan Vitaliy on 15.06.2021.
 //
 
-import Foundation
-
 struct CategoriesWrapper: Decodable {
     let drinks: [Category]
 }
 
 struct Category: Decodable, Hashable {
     let name: String
-    var isSelected: Bool? = false
+    var isSelected = false
     
     enum CodingKeys: String, CodingKey {
         case name = "strCategory"

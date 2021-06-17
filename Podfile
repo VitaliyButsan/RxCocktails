@@ -13,5 +13,6 @@ target 'RxCocktails' do
   pod 'Moya/RxSwift', '~> 14.0'
   pod 'SnapKit', '~> 5.0.0'
   pod 'MBProgressHUD', '~> 1.2.0'
-
+  pod 'SDWebImage'
+  
 end

@@ -5,13 +5,11 @@
 //  Created by Butsan Vitaliy on 15.06.2021.
 //
 
-import Foundation
-
 struct CocktailsWrapper: Decodable {
     let drinks: [Cocktail]
 }
 
-struct Cocktail: Decodable {
+struct Cocktail: Decodable, Equatable {
     let name: String?
     let thumbLink: String?
     let idDrink: String?

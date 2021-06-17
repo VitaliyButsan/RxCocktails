@@ -15,14 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        UINavigationBar.appearance().barTintColor = UIColor(white: 0.95, alpha: 0)
+        UINavigationBar.appearance().barTintColor = UIColor(white: 0.97, alpha: 0)
         UINavigationBar.appearance().isTranslucent = false
         
-        let viewModel = CocktailsViewModel()
-        let cocktailsVC = CocktailsViewController(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: cocktailsVC)
+        let cocktailsVM = CocktailsViewModel()
+        let cocktailsVC = CocktailsViewController(viewModel: cocktailsVM)
+        let nc = UINavigationController(rootViewController: cocktailsVC)
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navigationController
+        window?.rootViewController = nc
         window?.makeKeyAndVisible()
         
         return true

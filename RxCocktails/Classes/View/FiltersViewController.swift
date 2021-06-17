@@ -16,8 +16,6 @@ class FiltersViewController: UIViewController {
     
     private let bag = DisposeBag()
     
-    private var isButtonHighlighted = false
-    
     init(viewModel: CocktailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -30,19 +28,20 @@ class FiltersViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(FilterCell.self, forCellReuseIdentifier: FilterCell.reuseID)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.tableFooterView = UIView()
         return tableView
     }()
     
-    var applyFiltersButton: UIButton = {
+    private lazy var applyFiltersButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Apply Filters", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.gray, for: .disabled)
+        button.backgroundColor = .white
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -54,7 +53,7 @@ class FiltersViewController: UIViewController {
     private func setup() {
         viewModel.setupSections()
         setupLayout()
-        //setupNavBar()
+        setupNavBar()
         setupObservers()
         bindUI()
     }
@@ -64,20 +63,42 @@ class FiltersViewController: UIViewController {
          applyFiltersButton].forEach { view.addSubview($0) }
         
         tableView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self.view)
+            make.top.bottom.leading.trailing.equalTo(view)
         }
         
         applyFiltersButton.snp.makeConstraints { make in
-            make.leading.equalTo(self.view.snp.leading).inset(16)
-            make.trailing.equalTo(self.view.snp.trailing).inset(16)
-            make.bottom.equalTo(self.view.snp.bottom).inset(16 * 2)
+            make.leading.equalTo(view.snp.leading).inset(Constants.defaultPadding * 2)
+            make.trailing.equalTo(view.snp.trailing).inset(Constants.defaultPadding * 2)
+            make.bottom.equalTo(view.snp.bottom).inset(Constants.defaultPadding * 2)
             make.height.equalTo(50)
         }
     }
     
+    private func setupNavBar() {
+        navigationItem.title = "Filters"
+        navigationController?.navigationBar.tintColor = .black
+    }
+    
     private func setupObservers() {
+        
         applyFiltersButton.rx.tap
             .bind(to: viewModel.applyFiltersSbj)
+            .disposed(by: bag)
+        
+        applyFiltersButton.rx.tap
+            .bind {
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: bag)
+        
+        let enableButton = Observable<Bool>.combineLatest(viewModel.sections, viewModel.filters) { (sections,filters) in
+            let selectedSections = sections.filter { $0.model.isSelected }
+            let selectedFilters = filters.filter { $0.model.isSelected }
+            return selectedSections != selectedFilters
+        }
+        
+        enableButton
+            .bind(to: applyFiltersButton.rx.isEnabled)
             .disposed(by: bag)
     }
     
@@ -86,7 +107,7 @@ class FiltersViewController: UIViewController {
         viewModel.filters
             .bind(to: tableView.rx.items(cellIdentifier: FilterCell.reuseID, cellType: FilterCell.self)) { index, section, cell in
                 cell.categoryLabel.text = section.model.name
-                cell.checkmark.isHidden = !(section.model.isSelected ?? false)
+                cell.checkmark.isHidden = !section.model.isSelected
                 cell.selectionStyle = .none
             }
             .disposed(by: bag)

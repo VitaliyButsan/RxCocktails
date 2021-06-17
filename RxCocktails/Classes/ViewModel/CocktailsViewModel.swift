@@ -12,18 +12,20 @@ import Moya
 
 class CocktailsViewModel {
     
-    let applyFiltersSbj = PublishSubject<Void>()
+    // managers
+    private let netManager = CocktailsNetManager.instance
+    private let bag = DisposeBag()
     
-    private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
-    private(set) var filters = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
-    private(set) var isLoaded = BehaviorRelay(value: false)
+    // state
+    let applyFiltersSbj = PublishSubject<Void>()
+    private(set) var isLoadedData = BehaviorRelay(value: false)
     private(set) var hasFilters = BehaviorRelay(value: false)
     private(set) var noMoreCocktails = BehaviorRelay(value: false)
     
+    // storage
+    private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
+    private(set) var filters = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     private var allCategories: [Category] = []
-    
-    private let netManager = CocktailsNetManager.instance
-    private let bag = DisposeBag()
     
     init() {
         setupObservables()
@@ -52,12 +54,12 @@ class CocktailsViewModel {
     
     func getMoreCocktails() {
         for category in allCategories {
-            if !sections.value.contains(where: { $0.model == category }) {
-                isLoaded.accept(false)
+            if !sections.value.contains(where: { $0.model.name == category.name }) {
+                isLoadedData.accept(false)
                 getCocktails(by: category)
                 break
             } else {
-                if category == allCategories.last, noMoreCocktails.value == false {
+                if category == allCategories.last, !noMoreCocktails.value {
                     noMoreCocktails.accept(true)
                 }
             }
@@ -69,7 +71,7 @@ class CocktailsViewModel {
             switch event {
             case .success(let cocktails):
                 self?.save(cocktails, by: category)
-                self?.isLoaded.accept(true)
+                self?.isLoadedData.accept(true)
             case .error(let error):
                 print(error)
             }
@@ -79,20 +81,20 @@ class CocktailsViewModel {
     
     private func save(_ cocktails: [Cocktail], by category: Category) {
         let section = SectionModel(model: category, items: cocktails)
-        filters.accept(filters.value + [section])
         sections.accept(sections.value + [section])
+        filters.accept(sections.value)
     }
     
     func setSelected(category: Category) {
         guard let index = filters.value.firstIndex(where: { $0.model.name == category.name }) else { return }
         var tempFilters = filters.value
-        tempFilters[index].model.isSelected?.toggle()
+        tempFilters[index].model.isSelected.toggle()
         filters.accept(tempFilters)
     }
     
     private func applyFilters() {
-        hasFilters.accept(filters.value.contains(where: { $0.model.isSelected == true }))
-        let filteredSections = filters.value.filter { $0.model.isSelected == true }
+        hasFilters.accept(filters.value.contains { $0.model.isSelected })
+        let filteredSections = filters.value.filter { $0.model.isSelected }
         sections.accept(hasFilters.value ? filteredSections : filters.value)
     }
     
@@ -103,9 +105,9 @@ class CocktailsViewModel {
             tempFilters[index].model.isSelected = false
             filters.accept(tempFilters)
         }
-        // set selected
+        // set selected if needed
         for section in sections.value {
-            if section.model.isSelected == true {
+            if section.model.isSelected {
                 guard let index = filters.value.firstIndex(where: { $0.model.name == section.model.name }) else {return}
                 var tempFilters = filters.value
                 tempFilters[index].model.isSelected = true

@@ -14,7 +14,7 @@ class FilterCell: UITableViewCell {
     
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = Constants.cocktailCellFont
         return label
     }()
     
@@ -44,7 +44,7 @@ class FilterCell: UITableViewCell {
         
         categoryLabel.snp.makeConstraints { make in
             make.top.bottom.trailing.equalTo(contentView)
-            make.leading.equalTo(16)
+            make.leading.equalTo(20)
             make.height.equalTo(50)
         }
         

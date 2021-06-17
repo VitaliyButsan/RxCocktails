@@ -12,7 +12,7 @@ enum CocktailsService {
     case filterCocktails(by: String)
 }
 
-// MARK: - TargetType Protocol Implementation
+// MARK: - TargetType Protocol -
 
 extension CocktailsService: TargetType {
     
