@@ -83,7 +83,7 @@ class FiltersViewController: UIViewController {
     
     private func bindUI() {
         
-        viewModel.sections
+        viewModel.filters
             .bind(to: tableView.rx.items(cellIdentifier: FilterCell.reuseID, cellType: FilterCell.self)) { index, section, cell in
                 cell.categoryLabel.text = section.model.name
                 cell.checkmark.isHidden = !(section.model.isSelected ?? false)
@@ -94,13 +94,6 @@ class FiltersViewController: UIViewController {
         tableView.rx.modelSelected(SectionModel<Category, Cocktail>.self)
             .subscribe(onNext: { [weak self] category in
                 self?.viewModel.setSelected(category: category.model)
-            })
-            .disposed(by: bag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                let cell = self?.tableView.cellForRow(at: indexPath) as? FilterCell
-                cell?.checkmark.isHidden.toggle()
             })
             .disposed(by: bag)
     }

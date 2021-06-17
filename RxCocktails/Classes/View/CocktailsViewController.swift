@@ -46,11 +46,6 @@ class CocktailsViewController: UIViewController {
         getData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //setupFilterBarButton()
-    }
-    
     private func setupFilterBarButton(showBadge: Bool) {
         let badgeSideSize: CGFloat = 10
         let badge = UIView(frame: CGRect(x: 17, y: -4, width: badgeSideSize, height: badgeSideSize))
@@ -156,7 +151,7 @@ class CocktailsViewController: UIViewController {
         tableView.rx
             .willDisplayCell
             .subscribe(onNext: { cell, indexPath in
-                if indexPath == self.tableView.lastIndexPath() {
+                if indexPath == self.tableView.lastIndexPath(), !self.viewModel.hasFilters.value {
                     self.spinner.startAnimating()
                     self.viewModel.getMoreCocktails()
                 }
