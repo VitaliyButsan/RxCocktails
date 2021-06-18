@@ -10,7 +10,6 @@ import RxSwift
 import RxDataSources
 import MBProgressHUD
 import SnapKit
-import SDWebImage
 
 class CocktailsViewController: UIViewController {
     
@@ -155,9 +154,7 @@ class CocktailsViewController: UIViewController {
         
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<Category, Cocktail>> { (dataSource, table, indexPath, cocktail) in
             let cell = self.tableView.dequeueReusableCell(withIdentifier: CocktailCell.reuseID, for: indexPath) as! CocktailCell
-            cell.cocktailImageView.sd_setImage(with: URL(string: cocktail.thumbLink ?? ""), placeholderImage: UIImage(named: "placeholder"))
-            cell.cocktailLabel.text = cocktail.name
-            cell.separatorInset.left = Constants.defaultPadding * 2
+            cell.setupCell(with: cocktail)
             return cell
         }
         

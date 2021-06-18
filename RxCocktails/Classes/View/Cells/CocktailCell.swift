@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class CocktailCell: UITableViewCell {
     
@@ -51,5 +52,11 @@ class CocktailCell: UITableViewCell {
             make.top.bottom.trailing.equalTo(contentView)
             make.leading.equalTo(cocktailImageView.snp.trailing).inset(-20)
         }
+    }
+    
+    func setupCell(with cocktail: Cocktail) {
+        cocktailImageView.sd_setImage(with: URL(string: cocktail.thumbLink ?? ""), placeholderImage: UIImage(named: "placeholder"))
+        cocktailLabel.text = cocktail.name
+        separatorInset.left = Constants.defaultPadding * 2
     }
 }

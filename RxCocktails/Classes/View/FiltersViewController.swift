@@ -104,9 +104,7 @@ class FiltersViewController: UIViewController {
         
         viewModel.filters
             .bind(to: tableView.rx.items(cellIdentifier: FilterCell.reuseID, cellType: FilterCell.self)) { index, section, cell in
-                cell.categoryLabel.text = section.model.name
-                cell.checkmark.isHidden = !section.model.isSelected
-                cell.selectionStyle = .none
+                cell.setupCell(with: section.model)
             }
             .disposed(by: bag)
         

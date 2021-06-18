@@ -55,4 +55,10 @@ class FilterCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
     }
+    
+    func setupCell(with category: Category) {
+        categoryLabel.text = category.name
+        checkmark.isHidden = !category.isSelected
+        selectionStyle = .none
+    }
 }
