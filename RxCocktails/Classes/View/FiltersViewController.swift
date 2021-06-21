@@ -51,7 +51,7 @@ class FiltersViewController: UIViewController {
     }
     
     private func setup() {
-        viewModel.setupSections()
+        viewModel.setupFilters()
         setupLayout()
         setupNavBar()
         setupObservers()
@@ -92,10 +92,11 @@ class FiltersViewController: UIViewController {
         let enableButton = Observable<Bool>.combineLatest(viewModel.sections, viewModel.filters) { (sections,filters) in
             let selectedSections = sections.filter { $0.model.isSelected }
             let selectedFilters = filters.filter { $0.model.isSelected }
-            return selectedSections != selectedFilters
+            return selectedSections == selectedFilters
         }
         
         enableButton
+            .map(!)
             .bind(to: applyFiltersButton.rx.isEnabled)
             .disposed(by: bag)
     }

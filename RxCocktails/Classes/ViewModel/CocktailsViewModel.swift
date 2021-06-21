@@ -98,14 +98,14 @@ class CocktailsViewModel {
         sections.accept(hasFilters.value ? filteredSections : filters.value)
     }
     
-    func setupSections() {
-        // remove all selected
+    func setupFilters() {
+        // reset all filters
         for index in filters.value.indices {
             var tempFilters = filters.value
             tempFilters[index].model.isSelected = false
             filters.accept(tempFilters)
         }
-        // set selected if needed
+        // set needed filters
         for section in sections.value {
             if section.model.isSelected {
                 guard let index = filters.value.firstIndex(where: { $0.model.name == section.model.name }) else {return}
