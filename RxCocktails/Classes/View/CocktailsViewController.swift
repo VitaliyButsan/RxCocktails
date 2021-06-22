@@ -85,7 +85,7 @@ class CocktailsViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.title = "Drinks"
+        navigationItem.title = NSLocalizedString("Drinks", comment: "")
     }
     
     private func setupFiltersBarButton(showBadge: Bool) {
@@ -111,8 +111,8 @@ class CocktailsViewController: UIViewController {
         navigationController?.pushViewController(filtersVC, animated: true)
     }
     
-    private func showAlert(hideAfter: Int) {
-        let alertController = UIAlertController(title: "No More Cocktails!", message: "", preferredStyle: .alert)
+    private func showAlert(title: String, hideAfter: Int) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
         DispatchQueue.main.async {
             self.present(alertController, animated: true)
         }
@@ -127,7 +127,7 @@ class CocktailsViewController: UIViewController {
             .subscribe(onNext: { noMore in
                 if noMore {
                     self.removeFooterSpinner()
-                    self.showAlert(hideAfter: 2)
+                    self.showAlert(title: NSLocalizedString("No More Cocktails!", comment: ""), hideAfter: 2)
                 }
             })
             .disposed(by: bag)
@@ -170,23 +170,27 @@ class CocktailsViewController: UIViewController {
         tableView.rx
             .willDisplayCell
             .subscribe(onNext: { cell, indexPath in
-                if indexPath == self.tableView.lastIndexPath(),
-                   self.viewModel.isLoadedData.value,
-                   !self.viewModel.hasFilters.value,
-                   !self.viewModel.noMoreCocktails.value {
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.tableFooterView = self.footerSpinner
-                        self.footerSpinner.startAnimating()
-                        self.viewModel.getMoreCocktails()
-                    }
-                }
+                self.getMoreCocktailsIfNeeded(for: indexPath)
             })
             .disposed(by: bag)
         
         tableView.rx
             .setDelegate(self)
             .disposed(by: bag)
+    }
+    
+    private func getMoreCocktailsIfNeeded(for indexPath: IndexPath) {
+        if indexPath == self.tableView.lastIndexPath(),
+           self.viewModel.isLoadedData.value,
+           !self.viewModel.hasFilters.value,
+           !self.viewModel.noMoreCocktails.value {
+            
+            DispatchQueue.main.async {
+                self.tableView.tableFooterView = self.footerSpinner
+                self.footerSpinner.startAnimating()
+                self.viewModel.getMoreCocktails()
+            }
+        }
     }
 }
 

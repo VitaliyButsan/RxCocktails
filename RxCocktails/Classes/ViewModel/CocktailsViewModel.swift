@@ -87,9 +87,9 @@ class CocktailsViewModel {
     
     func setSelected(category: Category) {
         guard let index = filters.value.firstIndex(where: { $0.model.name == category.name }) else { return }
-        var tempFilters = filters.value
-        tempFilters[index].model.isSelected.toggle()
-        filters.accept(tempFilters)
+        var tmpFilters = filters.value
+        tmpFilters[index].model.isSelected.toggle()
+        filters.accept(tmpFilters)
     }
     
     private func applyFilters() {
@@ -101,17 +101,17 @@ class CocktailsViewModel {
     func setupFilters() {
         // reset all filters
         for index in filters.value.indices {
-            var tempFilters = filters.value
-            tempFilters[index].model.isSelected = false
-            filters.accept(tempFilters)
+            var tmpFilters = filters.value
+            tmpFilters[index].model.isSelected = false
+            filters.accept(tmpFilters)
         }
         // set needed filters
         for section in sections.value {
             if section.model.isSelected {
-                guard let index = filters.value.firstIndex(where: { $0.model.name == section.model.name }) else {return}
-                var tempFilters = filters.value
-                tempFilters[index].model.isSelected = true
-                filters.accept(tempFilters)
+                guard let index = filters.value.firstIndex(where: { $0.model.name == section.model.name }) else { return }
+                var tmpFilters = filters.value
+                tmpFilters[index].model.isSelected = true
+                filters.accept(tmpFilters)
             }
         }
     }

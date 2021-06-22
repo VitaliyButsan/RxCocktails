@@ -73,7 +73,7 @@ class FiltersViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.title = "Filters"
+        navigationItem.title = NSLocalizedString("Filters", comment: "")
         navigationController?.navigationBar.tintColor = .black
     }
     
