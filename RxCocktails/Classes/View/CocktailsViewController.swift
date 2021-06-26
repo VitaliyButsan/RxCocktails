@@ -5,7 +5,6 @@
 //  Created by Butsan Vitaliy on 15.06.2021.
 //
 
-import SwiftUI
 import RxSwift
 import RxDataSources
 import MBProgressHUD
@@ -13,12 +12,12 @@ import SnapKit
 
 class CocktailsViewController: UIViewController {
     
-    let viewModel: CocktailsViewModel
+    let cocktailsViewModel: CocktailsViewModel
     
     private let bag = DisposeBag()
     
     init(viewModel: CocktailsViewModel) {
-        self.viewModel = viewModel
+        self.cocktailsViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +46,7 @@ class CocktailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if viewModel.hasFilters.value {
+        if cocktailsViewModel.hasFilters.value {
             scrollToTop()
             removeFooterSpinner()
         }
@@ -74,7 +73,7 @@ class CocktailsViewController: UIViewController {
     }
     
     private func getData() {
-        viewModel.getData()
+        cocktailsViewModel.getData()
     }
     
     private func setupLayout() {
@@ -107,7 +106,8 @@ class CocktailsViewController: UIViewController {
     }
     
     @objc private func goToFiltersVC() {
-        let filtersVC = FiltersViewController(viewModel: viewModel)
+        cocktailsViewModel.setupFilters()
+        let filtersVC = FiltersViewController(viewModel: cocktailsViewModel)
         navigationController?.pushViewController(filtersVC, animated: true)
     }
     
@@ -123,7 +123,7 @@ class CocktailsViewController: UIViewController {
     
     private func setupObservers() {
         
-        viewModel.noMoreCocktails
+        cocktailsViewModel.noMoreCocktails
             .subscribe(onNext: { noMore in
                 if noMore {
                     self.removeFooterSpinner()
@@ -132,7 +132,7 @@ class CocktailsViewController: UIViewController {
             })
             .disposed(by: bag)
         
-        viewModel.isLoadedData
+        cocktailsViewModel.isLoadedData
             .subscribe(onNext: { isLoaded in
                 if isLoaded {
                     DispatchQueue.main.async {
@@ -143,7 +143,7 @@ class CocktailsViewController: UIViewController {
             })
             .disposed(by: bag)
         
-        viewModel.hasFilters
+        cocktailsViewModel.hasFilters
             .subscribe(onNext: { hasFilters in
                 self.setupFiltersBarButton(showBadge: hasFilters)
             })
@@ -162,7 +162,7 @@ class CocktailsViewController: UIViewController {
             return dataSource.sectionModels[index].model.name
         }
         
-        viewModel.sections
+        cocktailsViewModel.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
@@ -181,14 +181,14 @@ class CocktailsViewController: UIViewController {
     
     private func getMoreCocktailsIfNeeded(for indexPath: IndexPath) {
         if indexPath == self.tableView.lastIndexPath(),
-           self.viewModel.isLoadedData.value,
-           !self.viewModel.hasFilters.value,
-           !self.viewModel.noMoreCocktails.value {
+           self.cocktailsViewModel.isLoadedData.value,
+           !self.cocktailsViewModel.hasFilters.value,
+           !self.cocktailsViewModel.noMoreCocktails.value {
             
             DispatchQueue.main.async {
                 self.tableView.tableFooterView = self.footerSpinner
                 self.footerSpinner.startAnimating()
-                self.viewModel.getMoreCocktails()
+                self.cocktailsViewModel.getMoreCocktails()
             }
         }
     }
@@ -206,7 +206,7 @@ extension CocktailsViewController: UITableViewDelegate {
         let textLabel = UILabel()
         textLabel.font = Constants.headerTextFont
         textLabel.textColor = Constants.headerTextColor
-        textLabel.text = viewModel.sections.value[section].model.name.uppercased()
+        textLabel.text = cocktailsViewModel.sections.value[section].model.name.uppercased()
         
         headerView.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in

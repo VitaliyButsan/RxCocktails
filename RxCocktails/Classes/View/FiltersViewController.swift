@@ -5,19 +5,18 @@
 //  Created by Butsan Vitaliy on 16.06.2021.
 //
 
-import UIKit
 import RxSwift
 import RxDataSources
 import SnapKit
 
 class FiltersViewController: UIViewController {
     
-    let viewModel: CocktailsViewModel
+    let cocktailsViewModel: CocktailsViewModel
     
     private let bag = DisposeBag()
     
     init(viewModel: CocktailsViewModel) {
-        self.viewModel = viewModel
+        self.cocktailsViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,7 +50,6 @@ class FiltersViewController: UIViewController {
     }
     
     private func setup() {
-        viewModel.setupFilters()
         setupLayout()
         setupNavBar()
         setupObservers()
@@ -80,7 +78,7 @@ class FiltersViewController: UIViewController {
     private func setupObservers() {
         
         applyFiltersButton.rx.tap
-            .bind(to: viewModel.applyFiltersSbj)
+            .bind(to: cocktailsViewModel.applyFiltersSbj)
             .disposed(by: bag)
         
         applyFiltersButton.rx.tap
@@ -89,7 +87,7 @@ class FiltersViewController: UIViewController {
             }
             .disposed(by: bag)
         
-        let enableButton = Observable<Bool>.combineLatest(viewModel.sections, viewModel.filters) { (sections,filters) in
+        let enableButton = Observable<Bool>.combineLatest(cocktailsViewModel.sections, cocktailsViewModel.filters) { (sections,filters) in
             let selectedSections = sections.filter { $0.model.isSelected }
             let selectedFilters = filters.filter { $0.model.isSelected }
             return selectedSections == selectedFilters
@@ -103,7 +101,7 @@ class FiltersViewController: UIViewController {
     
     private func bindUI() {
         
-        viewModel.filters
+        cocktailsViewModel.filters
             .bind(to: tableView.rx.items(cellIdentifier: FilterCell.reuseID, cellType: FilterCell.self)) { index, section, cell in
                 cell.setupCell(with: section.model)
             }
@@ -111,7 +109,7 @@ class FiltersViewController: UIViewController {
         
         tableView.rx.modelSelected(SectionModel<Category, Cocktail>.self)
             .subscribe(onNext: { [weak self] category in
-                self?.viewModel.setSelected(category: category.model)
+                self?.cocktailsViewModel.setSelected(category: category.model)
             })
             .disposed(by: bag)
     }
