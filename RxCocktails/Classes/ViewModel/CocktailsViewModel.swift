@@ -8,7 +8,6 @@
 import RxSwift
 import RxCocoa
 import RxDataSources
-import Moya
 
 class CocktailsViewModel {
     
@@ -17,7 +16,6 @@ class CocktailsViewModel {
     private let bag = DisposeBag()
     
     // state
-    let applyFiltersSbj = PublishSubject<Void>()
     private(set) var isLoadedData = BehaviorRelay(value: false)
     private(set) var hasFilters = BehaviorRelay(value: false)
     private(set) var noMoreCocktails = BehaviorRelay(value: false)
@@ -26,18 +24,6 @@ class CocktailsViewModel {
     private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     private(set) var filters = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     private var allCategories: [Category] = []
-    
-    init() {
-        setupObservables()
-    }
-
-    private func setupObservables() {
-        applyFiltersSbj
-            .subscribe(onNext: { [weak self] _ in
-                self?.applyFilters()
-            })
-            .disposed(by: bag)
-    }
     
     func getData() {
         netManager.getCategories().subscribe { [weak self] event in
@@ -92,7 +78,7 @@ class CocktailsViewModel {
         filters.accept(tmpFilters)
     }
     
-    private func applyFilters() {
+    func applyFilters() {
         hasFilters.accept(filters.value.contains { $0.model.isSelected })
         let filteredSections = filters.value.filter { $0.model.isSelected }
         sections.accept(hasFilters.value ? filteredSections : filters.value)

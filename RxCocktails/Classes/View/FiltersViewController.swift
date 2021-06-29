@@ -78,7 +78,9 @@ class FiltersViewController: UIViewController {
     private func setupObservers() {
         
         applyFiltersButton.rx.tap
-            .bind(to: cocktailsViewModel.applyFiltersSbj)
+            .bind {
+                self.cocktailsViewModel.applyFilters()
+            }
             .disposed(by: bag)
         
         applyFiltersButton.rx.tap
