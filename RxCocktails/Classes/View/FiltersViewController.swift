@@ -76,33 +76,20 @@ class FiltersViewController: UIViewController {
     }
     
     private func setupObservers() {
-        
         applyFiltersButton.rx.tap
             .bind {
                 self.cocktailsViewModel.applyFilters()
-            }
-            .disposed(by: bag)
-        
-        applyFiltersButton.rx.tap
-            .bind {
                 self.navigationController?.popViewController(animated: true)
             }
             .disposed(by: bag)
         
-        let enableButton = Observable<Bool>.combineLatest(cocktailsViewModel.sections, cocktailsViewModel.filters) { (sections,filters) in
-            let selectedSections = sections.filter { $0.model.isSelected }
-            let selectedFilters = filters.filter { $0.model.isSelected }
-            return selectedSections == selectedFilters
-        }
-        
-        enableButton
+        cocktailsViewModel.isEnableApplyFiltersButton
             .map(!)
             .bind(to: applyFiltersButton.rx.isEnabled)
             .disposed(by: bag)
     }
     
     private func bindUI() {
-        
         cocktailsViewModel.filters
             .bind(to: tableView.rx.items(cellIdentifier: FilterCell.reuseID, cellType: FilterCell.self)) { index, section, cell in
                 cell.setupCell(with: section.model)

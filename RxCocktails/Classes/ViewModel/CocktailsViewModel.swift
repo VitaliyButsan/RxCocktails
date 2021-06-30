@@ -16,6 +16,7 @@ class CocktailsViewModel {
     private let bag = DisposeBag()
     
     // state
+    private(set) var isEnableApplyFiltersButton = BehaviorRelay(value: false)
     private(set) var isLoadedData = BehaviorRelay(value: false)
     private(set) var hasFilters = BehaviorRelay(value: false)
     private(set) var noMoreCocktails = BehaviorRelay(value: false)
@@ -24,6 +25,10 @@ class CocktailsViewModel {
     private(set) var sections = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     private(set) var filters = BehaviorRelay(value: [SectionModel<Category, Cocktail>]())
     private var allCategories: [Category] = []
+    
+    init() {
+        subscribeObservables()
+    }
     
     func getData() {
         netManager.getCategories().subscribe { [weak self] event in
@@ -69,6 +74,18 @@ class CocktailsViewModel {
         let newSection = SectionModel(model: category, items: cocktails)
         sections.accept(sections.value + [newSection])
         filters.accept(sections.value)
+    }
+    
+    private func subscribeObservables() {
+        Observable<Bool>.combineLatest(sections, filters) { (sections, filters) in
+            let selectedSections = sections.filter { $0.model.isSelected }
+            let selectedFilters = filters.filter { $0.model.isSelected }
+            return selectedSections == selectedFilters
+        }
+        .subscribe(onNext: { [weak self] isOn in
+            self?.isEnableApplyFiltersButton.accept(isOn)
+        })
+        .disposed(by: bag)
     }
     
     func setSelected(category: Category) {
