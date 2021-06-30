@@ -44,26 +44,6 @@ class CocktailsViewController: UIViewController {
         getData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if cocktailsViewModel.hasFilters.value {
-            scrollToTop()
-            removeFooterSpinner()
-        }
-    }
-    
-    func scrollToTop() {
-        DispatchQueue.main.async {
-            self.tableView.setContentOffset(.zero, animated: true)
-        }
-    }
-    
-    private func removeFooterSpinner() {
-        DispatchQueue.main.async {
-            self.tableView.tableFooterView = nil
-        }
-    }
-    
     private func setup() {
         setupLayout()
         setupNavBar()
@@ -76,10 +56,22 @@ class CocktailsViewController: UIViewController {
         cocktailsViewModel.getData()
     }
     
+    private func scrollToTop() {
+        DispatchQueue.main.async {
+            self.tableView.setContentOffset(.zero, animated: true)
+        }
+    }
+    
+    private func removeFooterSpinner() {
+        DispatchQueue.main.async {
+            self.tableView.tableFooterView = nil
+        }
+    }
+    
     private func setupLayout() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(self.view)
+            make.top.bottom.leading.trailing.equalTo(view)
         }
     }
     
@@ -145,6 +137,10 @@ class CocktailsViewController: UIViewController {
         
         cocktailsViewModel.hasFilters
             .subscribe(onNext: { hasFilters in
+                if hasFilters {
+                    self.scrollToTop()
+                    self.removeFooterSpinner()
+                }
                 self.setupFiltersBarButton(showBadge: hasFilters)
             })
             .disposed(by: bag)
@@ -166,7 +162,7 @@ class CocktailsViewController: UIViewController {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
-        // pagination logic
+        // pagination
         tableView.rx
             .willDisplayCell
             .subscribe(onNext: { cell, indexPath in
@@ -198,7 +194,7 @@ class CocktailsViewController: UIViewController {
 
 extension CocktailsViewController: UITableViewDelegate {
     
-    private func setupHeaderView(for section: Int) -> UIView {
+    private func setupSectionHeaderView(for section: Int) -> UIView {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.headerViewHeight))
         headerView.backgroundColor = Constants.headerBgColor
@@ -227,7 +223,7 @@ extension CocktailsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return setupHeaderView(for: section)
+        return setupSectionHeaderView(for: section)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

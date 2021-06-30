@@ -5,7 +5,6 @@
 //  Created by Butsan Vitaliy on 17.06.2021.
 //
 
-import UIKit
 import SnapKit
 import SDWebImage
 
@@ -43,8 +42,7 @@ class CocktailCell: UITableViewCell {
         
         cocktailImageView.snp.makeConstraints { make in
             make.leading.equalTo(contentView.snp.leading).inset(Constants.defaultPadding * 2)
-            make.height.equalTo(60)
-            make.width.equalTo(60)
+            make.width.height.equalTo(60)
             make.centerY.equalToSuperview()
         }
         

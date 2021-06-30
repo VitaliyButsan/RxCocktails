@@ -77,10 +77,8 @@ class CocktailsViewModel {
     }
     
     private func subscribeObservables() {
-        Observable<Bool>.combineLatest(sections, filters) { (sections, filters) in
-            let selectedSections = sections.filter { $0.model.isSelected }
-            let selectedFilters = filters.filter { $0.model.isSelected }
-            return selectedSections == selectedFilters
+        Observable.combineLatest(sections, filters) { (sections, filters) in
+            sections.filter{$0.model.isSelected} == filters.filter{$0.model.isSelected}
         }
         .subscribe(onNext: { [weak self] isOn in
             self?.isEnableApplyFiltersButton.accept(isOn)

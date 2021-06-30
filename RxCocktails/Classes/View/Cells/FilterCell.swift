@@ -5,7 +5,6 @@
 //  Created by Butsan Vitaliy on 16.06.2021.
 //
 
-import UIKit
 import SnapKit
 
 class FilterCell: UITableViewCell {
@@ -50,8 +49,7 @@ class FilterCell: UITableViewCell {
         
         checkmark.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.snp.trailing).inset(16)
-            make.height.equalTo(30)
-            make.width.equalTo(30)
+            make.width.height.equalTo(30)
             make.centerY.equalToSuperview()
         }
     }
