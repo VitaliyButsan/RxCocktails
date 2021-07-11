@@ -12,11 +12,9 @@ struct CocktailsWrapper: Decodable {
 struct Cocktail: Decodable, Equatable {
     let name: String?
     let thumbLink: String?
-    let idDrink: String?
     
     enum CodingKeys: String, CodingKey {
         case name = "strDrink"
         case thumbLink = "strDrinkThumb"
-        case idDrink
     }
 }

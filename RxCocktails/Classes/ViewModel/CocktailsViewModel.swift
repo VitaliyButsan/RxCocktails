@@ -80,8 +80,8 @@ class CocktailsViewModel {
         Observable.combineLatest(sections, filters) { (sections, filters) in
             sections.filter{$0.model.isSelected} == filters.filter{$0.model.isSelected}
         }
-        .subscribe(onNext: { [weak self] isOn in
-            self?.isEnableApplyFiltersButton.accept(isOn)
+        .subscribe(onNext: { [weak self] isEqual in
+            self?.isEnableApplyFiltersButton.accept(isEqual)
         })
         .disposed(by: bag)
     }

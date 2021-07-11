@@ -176,10 +176,10 @@ class CocktailsViewController: UIViewController {
     }
     
     private func getMoreCocktailsIfNeeded(for indexPath: IndexPath) {
-        if indexPath == self.tableView.lastIndexPath(),
-           self.cocktailsViewModel.isLoadedData.value,
-           !self.cocktailsViewModel.hasFilters.value,
-           !self.cocktailsViewModel.noMoreCocktails.value {
+        if indexPath == tableView.lastIndexPath(),
+           cocktailsViewModel.isLoadedData.value,
+           !cocktailsViewModel.hasFilters.value,
+           !cocktailsViewModel.noMoreCocktails.value {
             
             DispatchQueue.main.async {
                 self.tableView.tableFooterView = self.footerSpinner

@@ -61,7 +61,7 @@ class FiltersViewController: UIViewController {
          applyFiltersButton].forEach { view.addSubview($0) }
         
         tableView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(view)
+            make.edges.equalToSuperview()
         }
         
         applyFiltersButton.snp.makeConstraints { make in
